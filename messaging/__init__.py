@@ -4,5 +4,7 @@ from messaging.helpers import message_to_dict, message_from_dict
 __all__ = [
     "Message", 
     "message_to_dict", 
-    "message_from_dict"
+    "message_from_dict",
+    "MessageType",
+    "MessageStatus"
 ]
