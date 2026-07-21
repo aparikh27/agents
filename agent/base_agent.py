@@ -2,8 +2,8 @@ from messaging import *
 from abc import ABC, abstractmethod
 
 class Agent(ABC):
-    def __init__(self):
-        pass
+    def __init__(self, name):
+        self.name = name
 
     @abstractmethod
     def handle_message(self, msg: Message):
@@ -20,7 +20,7 @@ class Agent(ABC):
         return Message(
             sender=self.name,
             receiver=request.sender,
-            action=f"{request.action}_response",
+            action=f"{request.action}",
             payload=payload or {},
             status=status,
             message_type=MessageType.RESPONSE,       
