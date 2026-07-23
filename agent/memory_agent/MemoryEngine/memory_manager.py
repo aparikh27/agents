@@ -1,6 +1,6 @@
-from long_term.long_mem import LongTermMemory
-from short_term.short_mem import ShortTermMemory
-from memory import Memory, MemoryItem
+from agent.memory.MemoryEngine.long_term.long_mem import LongTermMemory
+from agent.memory.MemoryEngine.short_term.short_mem import ShortTermMemory
+from agent.memory.MemoryEngine.memory import Memory, MemoryItem
 
 class MemoryManager(Memory):
     def __init__(self, capacity: int = 100, db_path: str = "robot_memory.db"):

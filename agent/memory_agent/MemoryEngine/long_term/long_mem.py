@@ -1,4 +1,4 @@
-from memory import Memory, MemoryItem
+from agent.memory.MemoryEngine.memory import Memory, MemoryItem
 import sqlite3
 
 class LongTermMemory(Memory):

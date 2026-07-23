@@ -2,9 +2,9 @@ import time
 
 import pytest
 
-from memory import MemoryItem
-from short_term.short_mem import ShortTermMemory
-from long_term.long_mem import LongTermMemory
+from agent.memory.MemoryEngine.memory import MemoryItem
+from agent.memory.MemoryEngine.short_term.short_mem import ShortTermMemory
+from agent.memory.MemoryEngine.long_term.long_mem import LongTermMemory
 
 
 ###############################################################################

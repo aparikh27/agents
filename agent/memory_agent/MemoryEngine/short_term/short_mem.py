@@ -1,5 +1,5 @@
-from long_term.long_mem import LongTermMemory
-from memory import Memory, MemoryItem
+from agent.memory.MemoryEngine.long_term.long_mem import LongTermMemory
+from agent.memory.MemoryEngine.memory import Memory, MemoryItem
 from collections import deque
 
 class ShortTermMemory(Memory):

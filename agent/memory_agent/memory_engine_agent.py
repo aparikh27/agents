@@ -12,7 +12,7 @@ class MemoryEngineAgent(MemoryAgent):
     def __init__(self, capacity: int = 100, db_path: str = "robot_memory.db"):
         super().__init__()  # Passes name="Memory" up to BaseAgent
         self.memory_manager = MemoryManager(capacity=capacity, db_path=db_path)
-        print(f"🧠 [MemoryManagerAgent] Initialized with short-term capacity={capacity}, db='{db_path}'")
+        print(f"[MemoryManagerAgent] Initialized with short-term capacity={capacity}, db='{db_path}'")
 
     def _store(self, message: Message, payload: dict[str, Any]) -> Message:
         """Stores or modifies a MemoryItem.
