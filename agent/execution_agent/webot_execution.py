@@ -1,7 +1,7 @@
 from typing import Any, Protocol, runtime_checkable
 
 from messaging import Message, MessageStatus
-from agent.execution import ExecutorAgent
+from agent.execution_agent.execution import ExecutorAgent
 
 
 # ----------------------------------------------------------------------
