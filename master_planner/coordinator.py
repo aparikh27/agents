@@ -1,16 +1,15 @@
 from messaging import *
 from agent.base_agent import Agent
 from enum import Enum
-from master_planner.pipeline import PipelineManager
+from master_planner.pipeline import PipelineManager, PipelineStep
 from typing import Any
 
 
 class AgentType(str, Enum):
     VISION = "Vision"
-    PLANNING = "Planning"
-    EXECUTION = "Execution"
+    PLANNING = "Planner"    
+    EXECUTION = "Executor" 
     AUDIO = "Audio"
-
 
 class Coordinator:
     def __init__(self):
@@ -21,9 +20,14 @@ class Coordinator:
         self.all_agents[agent.name] = agent
 
     def run_custom_pipeline(
-        self, name: str, steps: list[tuple[str, str]], initial_payload: dict[str, Any]
+        self, name: str, steps: list[tuple[str, str]] | list[PipelineStep], initial_payload: dict[str, Any]
     ) -> Message:
-        self.pipeline.create_custom_pipeline(name, steps)
+        # Convert tuple steps into PipelineStep dataclasses if necessary
+        formatted_steps = [
+            step if isinstance(step, PipelineStep) else PipelineStep(receiver=step[0], action=step[1])
+            for step in steps
+        ]
+        self.pipeline.create_custom_pipeline(name, formatted_steps)
         return self.pipeline.run_pipeline(name, initial_payload)  
 
     def run_premade_pipeline(
