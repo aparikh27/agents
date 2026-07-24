@@ -22,7 +22,7 @@ class PipelineManager:
         """Pre-packaged default pathways with corrected agent names."""
         self.pipelines["full_pipeline"] = [
             PipelineStep(receiver="Audio", action="transcribe"),
-            PipelineStep(receiver="Vision", action="analyze"),
+            PipelineStep(receiver="Vision", action="analyze_scene"),
             PipelineStep(receiver="Planner", action="create_plan"),  # Fixed: "Planner"
             PipelineStep(receiver="Executor", action="execute"),     # Fixed: "Executor" & action="execute"
         ]

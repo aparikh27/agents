@@ -28,8 +28,13 @@ class YOLOVisionAgent(VisionAgent):
         if not image_path:
             return self.create_response(
                 request=message,
-                status=MessageStatus.ERROR,
-                error="Missing required payload parameter: 'image_path'",
+                payload={
+                    "image_path": None,
+                    "objects": [],
+                    "count": 0,
+                    "detections": [],
+                    "warning": "No 'image_path' provided in payload.",
+                },
             )
 
         if not os.path.isfile(image_path):
@@ -71,8 +76,12 @@ class YOLOVisionAgent(VisionAgent):
         if not image_path:
             return self.create_response(
                 request=message,
-                status=MessageStatus.ERROR,
-                error="Missing required payload parameter: 'image_path'",
+                payload={
+                    "image_path": None,
+                    "summary": "No image provided for scene analysis.",
+                    "detections": [],
+                    "warning": "No 'image_path' provided in payload.",
+                },
             )
 
         if not os.path.isfile(image_path):
