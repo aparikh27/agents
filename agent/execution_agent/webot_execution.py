@@ -1,7 +1,7 @@
 from typing import Any, Protocol, runtime_checkable
 
 from messaging import Message, MessageStatus
-from agent.execution import ExecutorAgent
+from agent.execution_agent.execution import ExecutorAgent
 
 
 # ----------------------------------------------------------------------
@@ -96,7 +96,11 @@ class WebotsExecutorAgent(ExecutorAgent):
         screen_center = camera_width / 2
         pixel_tolerance = 20
 
-        while True:
+        max_iterations = 50
+        iterations = 0
+
+        while iterations < max_iterations:
+            iterations += 1
             obj = self._resolve_object(target_item)
             if not obj:
                 self.robot.stop()
@@ -111,6 +115,8 @@ class WebotsExecutorAgent(ExecutorAgent):
 
             turn_step = 3.0 if error_pixels > 0 else -3.0
             self.robot.turn(turn_step)
+        else:
+            self.robot.stop()
 
         return self.robot.get_distance_to_front()
 

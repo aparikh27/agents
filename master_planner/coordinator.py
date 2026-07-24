@@ -10,6 +10,7 @@ class AgentType(str, Enum):
     PLANNING = "Planner"    
     EXECUTION = "Executor" 
     AUDIO = "Audio"
+    MEMORY = "Memory"
 
 class Coordinator:
     def __init__(self):
@@ -45,7 +46,7 @@ class Coordinator:
                 payload={},
                 message_type=MessageType.RESPONSE,
                 status=MessageStatus.ERROR,
-                parent_id=message.parent_id,
+                parent_id=message.request_id,
                 error=f"Agent '{receiver}' is not registered with the Coordinator.",
             )
         
@@ -60,6 +61,6 @@ class Coordinator:
                 payload={},
                 message_type=MessageType.RESPONSE,
                 status=MessageStatus.ERROR,
-                parent_id=message.parent_id,
+                parent_id=message.request_id,
                 error=f"Agent '{receiver}' crashed while processing: {str(e)}",
             )

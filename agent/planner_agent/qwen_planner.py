@@ -85,13 +85,13 @@ class QwenPlannerAgent(PlannerAgent):
     def _create_plan(self, message: Message, payload: dict[str, Any]) -> Message:
         """Extracts the task/command, runs it through the Qwen model, and returns
         the parsed plan as a native Python list under payload['plan']."""
-        task_data = payload.get("task") or payload.get("command")
+        task_data = payload.get("task") or payload.get("command") or payload.get("text")
 
         if not task_data:
             return self.create_response(
                 request=message,
                 status=MessageStatus.ERROR,
-                error="Missing required payload parameter: provide either 'task' or 'command'",
+                error="Missing required payload parameter: provide 'task', 'command', or 'text'",
             )
 
         try:
