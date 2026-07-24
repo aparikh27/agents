@@ -24,6 +24,6 @@ class Agent(ABC):
             payload=payload or {},
             status=status,
             message_type=MessageType.RESPONSE,       
-            parent_id=request.parent_id,
+            parent_id=request.request_id,
             error=error,
         )
