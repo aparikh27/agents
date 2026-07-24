@@ -10,6 +10,7 @@ class AgentType(str, Enum):
     PLANNING = "Planner"    
     EXECUTION = "Executor" 
     AUDIO = "Audio"
+    MEMORY = "Memory"
 
 class Coordinator:
     def __init__(self):
