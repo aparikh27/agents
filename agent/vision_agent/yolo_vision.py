@@ -1,6 +1,8 @@
 from typing import Any
 import os
+# pyrefly: ignore [missing-import]
 import cv2
+# pyrefly: ignore [missing-import]
 from ultralytics import YOLO
 
 from messaging import Message, MessageStatus

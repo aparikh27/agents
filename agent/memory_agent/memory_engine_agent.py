@@ -1,3 +1,4 @@
+import time
 from typing import Any
 from messaging import Message, MessageStatus
 from agent.memory_agent.memory import MemoryAgent
@@ -34,7 +35,7 @@ class MemoryEngineAgent(MemoryAgent):
             )
 
         try:
-            item = MemoryItem(key=key, value=value)
+            item = MemoryItem(key=key, value=value, timestamp=payload.get("timestamp") or time.time())
 
             if is_modify:
                 success = self.memory_manager.modify(item)
