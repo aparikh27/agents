@@ -1,7 +1,7 @@
 # messaging/helpers.py
 from dataclasses import asdict
 import json
-from messaging import *
+from agents.messaging import *
 
 def message_to_dict(msg: Message) -> dict:
     """Converts a Message object into a clean Python dictionary."""
