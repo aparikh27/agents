@@ -1,7 +1,7 @@
-from messaging import *
-from agent.base_agent import Agent
+from agents.messaging import *
+from agents.agent.base_agent import Agent
 from enum import Enum
-from master_planner.pipeline import PipelineManager, PipelineStep
+from agents.master_planner.pipeline import PipelineManager, PipelineStep
 from typing import Any
 
 

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from typing import Any
-from messaging import Message, MessageType, MessageStatus
+from agents.messaging import Message, MessageType, MessageStatus
 
 @dataclass
 class PipelineStep:
