@@ -5,8 +5,8 @@ import cv2
 # pyrefly: ignore [missing-import]
 from ultralytics import YOLO
 
-from messaging import Message, MessageStatus
-from agent.vision_agent import VisionAgent
+from agents.messaging import Message, MessageStatus
+from agents.agent.vision_agent import VisionAgent
 
 
 class YOLOVisionAgent(VisionAgent):

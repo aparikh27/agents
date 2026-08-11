@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import Any
-from agent.base_agent import Agent
-from messaging import Message, MessageStatus
+from agents.agent.base_agent import Agent
+from agents.messaging import Message, MessageStatus
 
 
 class MemoryAgent(Agent):

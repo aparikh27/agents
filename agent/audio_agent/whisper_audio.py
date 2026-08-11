@@ -3,8 +3,8 @@ import os
 import numpy as np
 import whisper
 
-from messaging import Message, MessageStatus
-from agent.audio_agent.audio import AudioAgent
+from agents.messaging import Message, MessageStatus
+from agents.agent.audio_agent.audio import AudioAgent
 
 
 class WhisperAudioAgent(AudioAgent):

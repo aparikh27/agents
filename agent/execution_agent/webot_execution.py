@@ -1,7 +1,8 @@
+import time
 from typing import Any, Protocol, runtime_checkable
 
-from messaging import Message, MessageStatus
-from agent.execution_agent.execution import ExecutorAgent
+from agents.messaging import Message, MessageStatus
+from agents.agent.execution_agent.execution import ExecutorAgent
 
 
 # ----------------------------------------------------------------------
@@ -87,8 +88,41 @@ class WebotsExecutorAgent(ExecutorAgent):
                 return obj
         return None
 
+    # Perception runs on its own thread: a camera frame plus detection lags the
+    # robot by roughly a frame period, and no frames are produced at all while a
+    # motion command holds the simulator step. Re-reading the world immediately
+    # after a turn therefore returns the *pre-turn* bounding box, and servoing
+    # on it overshoots and oscillates until the target leaves the frame.
+    # Frames arrive roughly every 100ms, so these only need to cover a brief
+    # dropout — not a whole model reload. Keeping them tight bounds the worst
+    # case: 50 iterations of a stalled feed must not add minutes to a task.
+    OBSERVATION_TIMEOUT = 0.6   # seconds to wait for a post-turn observation
+    REACQUIRE_TIMEOUT = 0.8     # seconds to tolerate a momentary dropout
+
+    def _resolve_object_blocking(self, target_item: str, timeout: float):
+        """Resolve a target, tolerating brief detection dropouts."""
+        deadline = time.monotonic() + timeout
+        while True:
+            obj = self._resolve_object(target_item)
+            if obj is not None:
+                return obj
+            if time.monotonic() >= deadline:
+                return None
+            time.sleep(0.02)
+
+    def _await_fresh_observation(self, target_item: str, stale_frame, timeout: float):
+        """Wait until the target is re-observed on a *newer* frame than ``stale_frame``."""
+        deadline = time.monotonic() + timeout
+        while time.monotonic() < deadline:
+            obj = self._resolve_object(target_item)
+            if obj is not None and obj.last_seen_frame != stale_frame:
+                return obj
+            time.sleep(0.02)
+        # Fall back to whatever is current rather than declaring the target lost.
+        return self._resolve_object_blocking(target_item, self.REACQUIRE_TIMEOUT)
+
     def _align_and_approach(self, target_item: str) -> float:
-        obj = self._resolve_object(target_item)
+        obj = self._resolve_object_blocking(target_item, self.REACQUIRE_TIMEOUT)
         if obj is None:
             return 0.0
 
@@ -101,8 +135,7 @@ class WebotsExecutorAgent(ExecutorAgent):
 
         while iterations < max_iterations:
             iterations += 1
-            obj = self._resolve_object(target_item)
-            if not obj:
+            if obj is None:
                 self.robot.stop()
                 return 0.0
 
@@ -113,8 +146,18 @@ class WebotsExecutorAgent(ExecutorAgent):
                 self.robot.stop()
                 break
 
-            turn_step = 3.0 if error_pixels > 0 else -3.0
+            # Proportional step, so a large error is corrected quickly without
+            # the fixed 3-degree step overshooting a small one. Roughly
+            # degrees-per-pixel for a 45-degree horizontal field of view.
+            degrees = abs(error_pixels) * 45.0 / max(camera_width, 1)
+            degrees = max(1.0, min(15.0, degrees))
+            turn_step = degrees if error_pixels > 0 else -degrees
+
+            stale_frame = obj.last_seen_frame
             self.robot.turn(turn_step)
+            obj = self._await_fresh_observation(
+                target_item, stale_frame, self.OBSERVATION_TIMEOUT
+            )
         else:
             self.robot.stop()
 

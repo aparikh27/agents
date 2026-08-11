@@ -1,10 +1,10 @@
 import time
 from typing import Any
-from messaging import Message, MessageStatus
-from agent.memory_agent.memory import MemoryAgent
+from agents.messaging import Message, MessageStatus
+from agents.agent.memory_agent.memory import MemoryAgent
 
-from agent.memory_agent.MemoryEngine.memory import MemoryItem
-from agent.memory_agent.MemoryEngine.memory_manager import MemoryManager
+from agents.agent.memory_agent.MemoryEngine.memory import MemoryItem
+from agents.agent.memory_agent.MemoryEngine.memory_manager import MemoryManager
 
 
 class MemoryEngineAgent(MemoryAgent):

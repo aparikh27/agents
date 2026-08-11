@@ -3,8 +3,8 @@ import json
 
 from llama_cpp import Llama
 
-from messaging import Message, MessageStatus
-from agent.planner_agent.planner import PlannerAgent
+from agents.messaging import Message, MessageStatus
+from agents.agent.planner_agent.planner import PlannerAgent
 
 
 class QwenPlannerAgent(PlannerAgent):

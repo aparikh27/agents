@@ -1,4 +1,4 @@
-from messaging import *
+from agents.messaging import *
 from abc import ABC, abstractmethod
 
 class Agent(ABC):
