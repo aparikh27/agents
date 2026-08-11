@@ -1,9 +1,9 @@
 import pytest
 from unittest.mock import MagicMock
-from messaging import Message, MessageType, MessageStatus
-from agent.execution_agent.execution import ExecutorAgent
-from agent.execution_agent.webot_execution import WebotsExecutorAgent
-from tests.conftest import DummyWorldObject
+from agents.messaging import Message, MessageType, MessageStatus
+from agents.agent.execution_agent.execution import ExecutorAgent
+from agents.agent.execution_agent.webot_execution import WebotsExecutorAgent
+from agents.tests.conftest import DummyWorldObject
 
 
 class DummyExecutorAgent(ExecutorAgent):

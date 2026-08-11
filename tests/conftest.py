@@ -11,13 +11,39 @@ for mod_name in ["whisper", "cv2", "ultralytics", "llama_cpp"]:
         except ImportError:
             sys.modules[mod_name] = MagicMock()
 
-from messaging import Message, MessageType, MessageStatus
-from master_planner.coordinator import Coordinator
-from agent.audio_agent.whisper_audio import WhisperAudioAgent
-from agent.vision_agent.yolo_vision import YOLOVisionAgent
-from agent.planner_agent.qwen_planner import QwenPlannerAgent
-from agent.execution_agent.webot_execution import WebotsExecutorAgent, RobotDriver, WorldModel
-from agent.memory_agent.memory_engine_agent import MemoryEngineAgent
+from agents.messaging import Message, MessageType, MessageStatus
+from agents.master_planner.coordinator import Coordinator
+from agents.agent.audio_agent.whisper_audio import WhisperAudioAgent
+from agents.agent.vision_agent.yolo_vision import YOLOVisionAgent
+from agents.agent.planner_agent.qwen_planner import QwenPlannerAgent
+from agents.agent.execution_agent.webot_execution import WebotsExecutorAgent, RobotDriver, WorldModel
+from agents.agent.memory_agent.memory_engine_agent import MemoryEngineAgent
+
+
+@pytest.fixture
+def mocker(monkeypatch, request):
+    """Small pytest-mock compatible surface used by this repository's tests.
+
+    Keeping this local makes the test suite runnable in the project's minimal
+    environment while preserving the existing ``mocker.patch`` call sites.
+    """
+    class _Patcher:
+        def __call__(self, target, *args, **kwargs):
+            patcher = patch(target, *args, **kwargs)
+            replacement = patcher.start()
+            request.addfinalizer(patcher.stop)
+            return replacement
+
+        def object(self, target, attribute, *args, **kwargs):
+            patcher = patch.object(target, attribute, *args, **kwargs)
+            replacement = patcher.start()
+            request.addfinalizer(patcher.stop)
+            return replacement
+
+    class _Mocker:
+        patch = _Patcher()
+
+    return _Mocker()
 
 
 # ----------------------------------------------------------------------
@@ -122,7 +148,7 @@ def mock_yolo_model(mocker):
     mock_yolo_instance = MagicMock()
     mock_yolo_instance.return_value = [mock_result]
 
-    mocker.patch("agent.vision_agent.yolo_vision.YOLO", return_value=mock_yolo_instance)
+    mocker.patch("agents.agent.vision_agent.yolo_vision.YOLO", return_value=mock_yolo_instance)
     return mock_yolo_instance
 
 
@@ -137,7 +163,7 @@ def mock_qwen_model(mocker):
             }
         ]
     }
-    mocker.patch("agent.planner_agent.qwen_planner.Llama", return_value=mock_llama_instance)
+    mocker.patch("agents.agent.planner_agent.qwen_planner.Llama", return_value=mock_llama_instance)
     return mock_llama_instance
 
 

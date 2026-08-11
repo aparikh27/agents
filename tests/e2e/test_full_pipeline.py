@@ -1,13 +1,13 @@
 import pytest
 from unittest.mock import MagicMock
-from messaging import Message, MessageType, MessageStatus
-from master_planner.coordinator import Coordinator
-from master_planner.pipeline import PipelineStep
-from agent.audio_agent.whisper_audio import WhisperAudioAgent
-from agent.vision_agent.yolo_vision import YOLOVisionAgent
-from agent.planner_agent.qwen_planner import QwenPlannerAgent
-from agent.execution_agent.webot_execution import WebotsExecutorAgent
-from agent.memory_agent.memory_engine_agent import MemoryEngineAgent
+from agents.messaging import Message, MessageType, MessageStatus
+from agents.master_planner.coordinator import Coordinator
+from agents.master_planner.pipeline import PipelineStep
+from agents.agent.audio_agent.whisper_audio import WhisperAudioAgent
+from agents.agent.vision_agent.yolo_vision import YOLOVisionAgent
+from agents.agent.planner_agent.qwen_planner import QwenPlannerAgent
+from agents.agent.execution_agent.webot_execution import WebotsExecutorAgent
+from agents.agent.memory_agent.memory_engine_agent import MemoryEngineAgent
 
 
 @pytest.mark.e2e

@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock
-from messaging import Message, MessageType, MessageStatus
-from agent.vision_agent.vision import VisionAgent
-from agent.vision_agent.yolo_vision import YOLOVisionAgent
+from agents.messaging import Message, MessageType, MessageStatus
+from agents.agent.vision_agent.vision import VisionAgent
+from agents.agent.vision_agent.yolo_vision import YOLOVisionAgent
 
 
 class DummyVisionAgent(VisionAgent):
@@ -117,7 +117,7 @@ class TestYOLOVisionAgent:
         assert resp.payload["summary"] == "Scene contains 1 red ball."
         assert len(resp.payload["detections"]) == 1
 
-    def test_summarize_scene_formatting(self):
+    def test_summarize_scene_formatting(self, mock_yolo_model):
         agent = YOLOVisionAgent()
         
         # Test empty detections

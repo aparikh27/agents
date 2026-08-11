@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock
-from messaging import Message, MessageType, MessageStatus
-from agent.planner_agent.planner import PlannerAgent
-from agent.planner_agent.qwen_planner import QwenPlannerAgent
+from agents.messaging import Message, MessageType, MessageStatus
+from agents.agent.planner_agent.planner import PlannerAgent
+from agents.agent.planner_agent.qwen_planner import QwenPlannerAgent
 
 
 class DummyPlannerAgent(PlannerAgent):

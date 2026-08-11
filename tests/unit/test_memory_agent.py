@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock
-from messaging import Message, MessageType, MessageStatus
-from agent.memory_agent.memory import MemoryAgent
-from agent.memory_agent.memory_engine_agent import MemoryEngineAgent
+from agents.messaging import Message, MessageType, MessageStatus
+from agents.agent.memory_agent.memory import MemoryAgent
+from agents.agent.memory_agent.memory_engine_agent import MemoryEngineAgent
 
 
 class DummyMemoryAgent(MemoryAgent):

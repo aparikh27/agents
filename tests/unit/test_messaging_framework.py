@@ -1,6 +1,6 @@
 import pytest
-from messaging import Message, MessageType, MessageStatus
-from messaging.helpers import message_to_dict, message_from_dict
+from agents.messaging import Message, MessageType, MessageStatus
+from agents.messaging.helpers import message_to_dict, message_from_dict
 
 
 @pytest.mark.unit

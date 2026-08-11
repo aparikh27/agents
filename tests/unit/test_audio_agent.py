@@ -1,9 +1,9 @@
 import pytest
 import numpy as np
 from unittest.mock import MagicMock
-from messaging import Message, MessageType, MessageStatus
-from agent.audio_agent.audio import AudioAgent
-from agent.audio_agent.whisper_audio import WhisperAudioAgent
+from agents.messaging import Message, MessageType, MessageStatus
+from agents.agent.audio_agent.audio import AudioAgent
+from agents.agent.audio_agent.whisper_audio import WhisperAudioAgent
 
 
 class DummyAudioAgent(AudioAgent):
